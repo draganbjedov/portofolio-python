@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for
+import csv
 
 app = Flask(__name__)
 
@@ -25,9 +26,13 @@ def contact_form():
         email = request.form['email']
         subject = request.form['subject']
         message = request.form['message']
+        write_to_csv(name, email, subject, message)
     return redirect(
         url_for(endpoint='.page', page_name='contact_ok', contact_name=name))
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+def write_to_csv(name, email, subject, message):
+    with open('database.csv', mode='a') as file:
+       writer = csv.writer(file, quotechar='"')
+       writer.writerow([name, email, subject, message])
+    pass
