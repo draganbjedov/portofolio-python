@@ -32,7 +32,7 @@ def contact_form():
 
 
 def write_to_csv(name, email, subject, message):
-    with open('database.csv', mode='a') as file:
+    with open('database.csv', mode='a', newline='') as file:
        writer = csv.writer(file, quotechar='"')
        writer.writerow([name, email, subject, message])
     pass
